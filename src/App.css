@@ -129,3 +129,75 @@
   background-color: #f8f9fa;
   border-radius: 4px;
 }
+
+.download-button {
+  margin: 1rem 0;
+  background-color: #6c757d;
+}
+
+.download-button:hover {
+  background-color: #5a6268;
+}
+
+.cover-letter-pdf {
+  display: none;
+  max-width: 8.5in;
+  margin: 0 auto;
+  padding: 1in;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12pt;
+  line-height: 1.5;
+  background-color: white;
+}
+
+.pdf-header {
+  margin-bottom: 2em;
+}
+
+.sender-info {
+  margin-bottom: 1.5em;
+}
+
+.sender-info p {
+  margin: 0.2em 0;
+}
+
+.date {
+  margin-bottom: 1.5em;
+}
+
+.company-info {
+  margin-bottom: 1.5em;
+}
+
+.letter-content {
+  text-align: justify;
+  margin-bottom: 2em;
+  white-space: pre-wrap;
+}
+
+.letter-closing {
+  margin-top: 2em;
+}
+
+.letter-closing p {
+  margin: 0.5em 0;
+}
+
+.sender-name {
+  font-weight: bold;
+}
+
+@media print {
+  .preview-only,
+  .modification-section,
+  .download-button,
+  .cover-letter-header {
+    display: none !important;
+  }
+
+  .cover-letter-pdf {
+    display: block !important;
+    padding: 0;
+  }
+}
