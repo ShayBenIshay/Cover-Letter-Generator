@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import html2pdf from "html2pdf.js";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import CoverLetterPDF from "./components/CoverLetterPDF";
 import "./App.css";
 
 function App() {
@@ -168,38 +169,6 @@ function App() {
     return new Date(dateString).toLocaleString();
   };
 
-  const handleDownloadPDF = () => {
-    const element = coverLetterRef.current;
-
-    // Temporarily show the PDF content
-    element.style.display = "block";
-
-    const opt = {
-      margin: [0.75, 0.75, 0.75, 0.75],
-      filename: `Cover_Letter_${formData.company_name.replace(
-        /\s+/g,
-        "_"
-      )}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: {
-        unit: "in",
-        format: "letter",
-        orientation: "portrait",
-      },
-      pagebreak: { mode: "avoid-all" },
-    };
-
-    html2pdf()
-      .set(opt)
-      .from(element)
-      .save()
-      .then(() => {
-        // Hide the PDF content again after generation
-        element.style.display = "none";
-      });
-  };
-
   return (
     <div className="container">
       <h1>Cover Letter Generator</h1>
@@ -288,41 +257,25 @@ function App() {
             </div>
           </div>
 
-          <button
+          <PDFDownloadLink
+            document={
+              <CoverLetterPDF
+                coverLetter={coverLetter}
+                companyName={formData.company_name}
+              />
+            }
+            fileName={`Cover_Letter_${formData.company_name.replace(
+              /\s+/g,
+              "_"
+            )}.pdf`}
             className="submit-button download-button"
-            onClick={handleDownloadPDF}
           >
-            Download as PDF
-          </button>
+            {({ blob, url, loading, error }) =>
+              loading ? "Preparing PDF..." : "Download as PDF"
+            }
+          </PDFDownloadLink>
 
-          <div className="cover-letter-pdf" ref={coverLetterRef}>
-            <div className="pdf-header">
-              <div className="sender-info">
-                <p className="sender-name">Your Name</p>
-                <p>your.email@example.com</p>
-                <p>Your Phone Number</p>
-              </div>
-              <div className="date">
-                {new Date().toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </div>
-              <div className="company-info">
-                <p>{formData.company_name}</p>
-              </div>
-            </div>
-            <div className="letter-content">
-              <p>{coverLetter}</p>
-            </div>
-            <div className="letter-closing">
-              <p>Sincerely,</p>
-              <p className="sender-name">Your Name</p>
-            </div>
-          </div>
-
-          <div className="preview-only">
+          <div className="preview">
             <p>{coverLetter}</p>
           </div>
 

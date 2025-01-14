@@ -201,3 +201,10 @@
     padding: 0;
   }
 }
+
+/* Add these styles for the PDF download link */
+a.download-button {
+  display: inline-block;
+  text-decoration: none;
+  margin: 1rem 0;
+}
